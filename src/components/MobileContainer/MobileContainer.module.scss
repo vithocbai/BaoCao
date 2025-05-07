@@ -1,0 +1,40 @@
+.mobileSection {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.mobileContainer {
+    display: flex;
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 20px 0;
+    gap: 20px;
+}
+
+.sidebarWrapper {
+    width: 22%;
+    @media (max-width: 1024px) {
+        display: none;
+    }
+}
+
+.productGrid {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    height: 100%;
+
+    @media (max-width: 1024px) {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    @media (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media (max-width: 480px) {
+        grid-template-columns: 1fr;
+    }
+}

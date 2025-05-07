@@ -1,0 +1,54 @@
+.slider {
+    width: 100%;
+    height: 100%;
+    position: relative;
+
+    img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+        display: block;
+    }
+
+    :global(.swiper-button-next),
+    :global(.swiper-button-prev) {
+        color: #fff;
+        background: rgba(0, 0, 0, 0.4);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        top: 60%;
+        transform: translateY(-50%);
+        font-size: 18px;
+        transition: all 0.3s ease;
+        opacity: 0; // <- mặc định ẩn nút
+        visibility: hidden;
+    }
+
+    :global(.swiper-button-next::after),
+    :global(.swiper-button-prev::after) {
+        font-size: 14px;
+    }
+
+    /* Hover vào slider thì show nút */
+    &:hover {
+        :global(.swiper-button-next),
+        :global(.swiper-button-prev) {
+            opacity: 1;
+            visibility: visible;
+        }
+    }
+
+    /* Hover nút: hiệu ứng sáng nền + icon màu đen */
+    :global(.swiper-button-next:hover),
+    :global(.swiper-button-prev:hover) {
+        background: rgba(255, 255, 255, 0.8);
+        color: #000;
+    }
+}
+
+.sliderText {
+    padding: 25px;
+    background-color: #fff;
+    text-align: center;
+}

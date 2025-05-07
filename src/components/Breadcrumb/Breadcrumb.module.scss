@@ -1,0 +1,84 @@
+.breadcrumbWrapper {
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+.breadcrumbContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 24px 0 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.breadcrumb {
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    a {
+        color: rgba(102, 102, 102, 0.7);
+        text-decoration: none;
+        font-weight: 500;
+        text-transform: uppercase;
+
+        &:hover {
+            color: #222;
+        }
+    }
+
+    .localLink {
+        color: #222;
+        font-weight: 600;
+    }
+
+    span {
+        margin: 0 5px;
+        color: #666;
+        font-weight: 400;
+    }
+}
+
+.breadcrumbRight {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    span {
+        font-size: 16px;
+        color: #1c1c1c;
+    }
+
+    .selectWrapper {
+        position: relative;
+        width: 260px;
+
+        select {
+            width: 100%;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            padding: 10px 30px 10px 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            font-family: inherit;
+            background: #fdfdfd;
+            outline: none;
+            cursor: pointer;
+        }
+
+        .dropdownIcon {
+            position: absolute;
+            top: 50%;
+            right: 6px;
+            transform: translateY(-50%);
+            font-size: 22px;
+            color: #6e6767;
+            pointer-events: none;
+        }
+    }
+}

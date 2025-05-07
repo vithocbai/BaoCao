@@ -1,0 +1,138 @@
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5); /* Mờ 50% */
+    z-index: 999;
+}
+
+.mobileMenu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    height: 100%;
+    background: #f2f2f2;
+    z-index: 1000;
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    padding: 30px 0;
+    animation: slideIn 0.3s forwards;
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-100%);
+        }
+        to {
+            transform: translateX(0);
+        }
+    }
+
+    .search {
+        flex: 1;
+        display: flex;
+        margin-left: auto;
+        margin-right: auto;
+        justify-content: center;
+        max-width: 100%;
+        max-height: 58px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #d9d9d9;
+        margin: 0;
+        padding-left: 20px;
+        padding-right: 20px;
+
+        input {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            padding: 10px 16px;
+            border: 1px solid #ccc;
+            outline: none;
+        }
+
+        button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 7px 12px;
+            background-color: #ee0033; /* đỏ tươi đúng mẫu */
+            color: #fff;
+            border: 1px solid #ee0033;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                background-color: #c40028;
+            }
+
+            svg {
+                font-size: 22px;
+            }
+        }
+    }
+
+    .menu {
+        list-style: none;
+
+        li {
+            padding: 15px 0 15px 20px;
+            border-bottom: 1px solid #d9d9d9;
+            a {
+                display: flex;
+                align-items: center;
+                text-decoration: none;
+                color: #666;
+                font-size: 16px;
+                font-weight: 600;
+                transition: color 0.3s;
+                text-transform: uppercase;
+                .icon {
+                    padding-right: 8px;
+                    width: 24px;
+                    height: 24px;
+                }
+
+                &:hover {
+                    color: #ee0033;
+                }
+            }
+        }
+    }
+
+    .login {
+        padding: 15px 0 15px 20px;
+        border-bottom: 1px solid #d9d9d9;
+        a {
+            text-decoration: none;
+            color: #666;
+            font-size: 16px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+    }
+
+    .socials {
+        display: flex;
+        gap: 20px;
+        padding: 15px 0 15px 20px;
+
+        svg {
+            font-size: 24px;
+            color: #999999;
+        }
+    }
+
+    .closeIcon {
+        position: absolute;
+        z-index: 20;
+        top: 4px;
+        right: -30px;
+        cursor: pointer;
+        font-size: 24px;
+        color: #fff;
+    }
+}
