@@ -1,0 +1,45 @@
+.descriptionSection {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 100px;
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+  
+    h2 {
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+  
+
+    .rightCol {
+      flex: 1;
+      min-width: 300px;
+  
+      table {
+        width: 100%;
+        border-collapse: collapse;
+  
+        td {
+          padding: 8px 12px;
+          border-bottom: 1px solid #eee;
+          font-size: 15px;
+          vertical-align: top;
+  
+          &:first-child {
+            font-weight: 600;
+            color: #333;
+            width: 45%;
+          }
+  
+          &:last-child {
+            color: #555;
+          }
+        }
+      }
+    }
+  }
+  

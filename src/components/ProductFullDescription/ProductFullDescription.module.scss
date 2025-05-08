@@ -1,0 +1,38 @@
+.fullDescriptionSection {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+.fullDescription {
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px 0;  
+    
+    .sectionTitle {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 24px;
+      text-transform: uppercase;
+      color: #1c1c1c;
+    }
+  
+    .block {
+      margin-bottom: 32px;
+  
+      h3 {
+        font-size: 18px;
+        font-weight: 600;
+        margin-bottom: 12px;
+        color: #333;
+      }
+  
+      p {
+        font-size: 15px;
+        line-height: 1.7;
+        color: #444;
+        margin-bottom: 10px;
+      }
+    }
+  }
+  

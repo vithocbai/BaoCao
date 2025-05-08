@@ -1,0 +1,72 @@
+.colorSelector {
+    display: flex;
+    align-items: center;
+    font-size: 16px;
+    margin-bottom: 30px;
+    gap: 60px;
+
+    label {
+        font-weight: 500;
+    }
+
+    .customSelect {
+        position: relative;
+        width: 80%;
+        cursor: pointer;
+        user-select: none;
+
+        .selectedValue {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 16px;
+            border-radius: 50px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            background-color: #fff;
+            transition: border 0.2s ease;
+            color: #333;
+            &:hover {
+                border-color: #888;
+            }
+
+            .icon {
+                font-size: 20px;
+                margin-left: 10px;
+            }
+        }
+
+        .placeholder {
+            color: #999; // màu xám nhạt cho placeholder
+        }
+
+        .options {
+            position: absolute;
+            top: 110%;
+            left: 0;
+            right: 0;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 10;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+
+            li {
+                padding: 10px 16px;
+                cursor: pointer;
+                transition: background 0.2s;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+
+                &.active {
+                    font-weight: bold;
+                    background-color: #e6f7ff;
+                }
+            }
+        }
+    }
+}

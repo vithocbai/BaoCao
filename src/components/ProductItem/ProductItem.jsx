@@ -1,36 +1,37 @@
 import React, { useState } from "react";
 import styles from "./ProductItem.module.scss";
 import { Link } from "react-router-dom";
-const ProductItem = ({ item, setHeight = false }) => {
-    console.log(item.image[0]);
 
+const ProductItem = ({ item, setHeight = false }) => {
+    const [isHover, setIsHover] = useState(false);
     return (
         <div className={styles.productCard}>
-            <Link to='/Detail'
-                className={styles.imageWrapper}
-                onMouseEnter={() => setIsHover(true)}
-                onMouseLeave={() => setIsHover(false)}
-            >
-                <img
-                    style={{
-                        minHeight: setHeight ? "197px" : "293px",
-                    }}
-                    src={item.image[0]}
-                    alt={item.name}
-                />
-                {item.image[1] && (
+            <Link to='/detail'>
+                <div
+                    className={styles.imageWrapper}
+                    onMouseEnter={() => setIsHover(true)}
+                    onMouseLeave={() => setIsHover(false)}
+                >
                     <img
-                        className={styles.hoverImage}
                         style={{
                             minHeight: setHeight ? "197px" : "293px",
                         }}
-                        src={item.image[1]}
+                        src={item.image[0]}
                         alt={item.name}
                     />
-                )}
+                    {item.image[1] && (
+                        <img
+                            className={styles.hoverImage}
+                            style={{
+                                minHeight: setHeight ? "197px" : "293px",
+                            }}
+                            src={item.image[1]}
+                            alt={item.name}
+                        />
+                    )}
 
-                {item.sale && <span className={styles.saleTag}>Giảm giá</span>}
-
+                    {item.sale && <span className={styles.saleTag}>Giảm giá</span>}
+                </div>
                 <div className={styles.info}>
                     <p className={styles.name}>{item.name}</p>
                     <p className={styles.price}>{item.price}</p>

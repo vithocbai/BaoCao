@@ -1,9 +1,11 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import Home from "@components/Home/Home";
-import SmartPhone from "./Pages/SmartPhone/SmartPhone";
-import Laptop from "./Pages/Laptop/Laptop";
-import AdminDashboard from "./Pages/Admin/AdminDashboard";
-import ProductForm from "./Pages/Admin/ProductForm";
+import SmartPhone from "@pages/SmartPhone/SmartPhone";
+import Laptop from "@pages/Laptop/Laptop";
+import ProductDetail from "@components/ProductDetail/ProductDetail";
+import Login from "@pages/Login/Login";
+import Register from "@pages/Register/Register";
+import PrivateRoute from "@components/PrivateRoute/PrivateRoute";
 
 function App() {
     return (
@@ -13,9 +15,17 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/dien-thoai" element={<SmartPhone />} />
                     <Route path="/laptop" element={<Laptop />} />
-                    <Route path="/admin" element={<AdminDashboard />} />
-                    <Route path="/admin/product/new" element={<ProductForm />} />
-                    <Route path="/admin/product/:id/edit" element={<ProductForm />} />
+                    <Route path="/detail" element={<ProductDetail />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/register" element={<Register />} />
+                    <Route
+                        path="/"
+                        element={
+                            <PrivateRoute>
+                                <Home />
+                            </PrivateRoute>
+                        }
+                    />
                 </Routes>
             </Router>
         </>
