@@ -7,9 +7,12 @@ import { useState } from "react";
 import { RiLoginCircleLine } from "react-icons/ri";
 import { GiArchiveRegister } from "react-icons/gi";
 import { Link } from "react-router-dom";
+import { getUser } from "../../utils/auth";
+import UserDropdown from "@components/UserDropdown/UserDropdown";
 
 function HeaderTop() {
     const [isOpenMenu, setIsOpenMenu] = useState(false);
+    const user = getUser();
 
     return (
         <div className={styles.headerTop}>
@@ -40,18 +43,28 @@ function HeaderTop() {
                     </div>
 
                     <div className={styles.right}>
-                        <Link to="/login" className={styles.info}>
-                            <RiLoginCircleLine style={{ fontSize: "30px" }} />
-                            Đăng Nhập
-                        </Link>
-                        <Link to="/register" className={styles.info}>
-                            <GiArchiveRegister style={{ fontSize: "30px" }} />
-                            Đăng Ký
-                        </Link>
+                        {!user ? (
+                            <>
+                                <Link to="/login" className={styles.info}>
+                                    <RiLoginCircleLine style={{ fontSize: "30px" }} />
+                                    Đăng Nhập
+                                </Link>
+                                <Link to="/register" className={styles.info}>
+                                    <GiArchiveRegister style={{ fontSize: "30px" }} />
+                                    Đăng Ký
+                                </Link>
+                            </>
+                        ) : (
+                            <div className={styles.userBox}>
+                                <UserDropdown username={user.username} />
+                            </div>
+                        )}
+
                         <a href="#" className={styles.info}>
                             <img src="./images/tinhay.png" alt="" />
                             Tin hay
                         </a>
+
                         <Link to="/cart" className={styles.info}>
                             <div style={{ margin: "auto" }}>
                                 <BsCartCheckFill style={{ fontSize: "24px" }} />

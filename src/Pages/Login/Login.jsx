@@ -1,102 +1,181 @@
 import React from "react";
 import styles from "./Login.module.scss";
-import { FcGoogle } from "react-icons/fc";
-import { MdEmail, MdLock } from "react-icons/md";
-import { useFormik } from "formik";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import { Link } from "react-router-dom";
-import { loginUser } from "@/services/authService";
+import { FaEnvelope, FaLock } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { jwtDecode } from "jwt-decode";
+import { GoogleLogin } from "@react-oauth/google";
+import Header from "@components/Header/Header";
+import Footer from "@components/Footer/Footer";
+import Product from "@components/Product/Product";
 
-export default function Login() {
-    const formik = useFormik({
-        initialValues: {
-            email: "",
-            password: "",
-        },
-        validationSchema: Yup.object({
-            email: Yup.string().email("Email không hợp lệ").required("Email không được để trống"),
-            password: Yup.string().min(6, "Tối thiểu 6 ký tự").required("Mật khẩu không được để trống"),
-        }),
-        onSubmit: (values) => {
-            console.log("✅ Dữ liệu đăng nhập:", values);
-            // TODO: Gọi API login
-        },
+const Login = () => {
+    const navigate = useNavigate();
+
+    const initialValues = {
+        email: "",
+        password: "",
+    };
+
+    const validationSchema = Yup.object({
+        email: Yup.string().email("Email không hợp lệ").required("Email không được bỏ trống"),
+        password: Yup.string().required("Mật khẩu không được bỏ trống"),
     });
 
-    const onSubmit = async (values) => {
+    const handleSubmit = async (values, { setSubmitting, setErrors }) => {
         try {
-            const res = await loginUser(values);
-            const token = res.data.token;
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/login`, values);
+            const { token, username, email, role } = res.data; // Thêm email và role vào destructure
+            console.log(res.data); // Log toàn bộ res.data
 
-            // Lưu vào localStorage
+            // Lưu dữ liệu vào localStorage
             localStorage.setItem("token", token);
-
-            // Chuyển sang trang dashboard
-            navigate("/"); // hoặc "/user", tuỳ bạn cấu hình route
+            localStorage.setItem(
+                "user",
+                JSON.stringify({
+                    username,
+                    email,
+                    role, // Đảm bảo role được lưu vào localStorage
+                })
+            );
+            alert("🎉 Đăng nhập thành công!");
+            navigate("/");
         } catch (err) {
-            alert(err.response?.data?.message || "Đăng nhập thất bại");
+            const msg = err.response?.data?.message || "Đăng nhập thất bại";
+            setErrors({ password: msg });
+        } finally {
+            setSubmitting(false);
+        }
+    };
+
+    const handleGoogleLogin = async (credentialResponse) => {
+        try {
+            const decoded = jwtDecode(credentialResponse.credential);
+            const res = await axios.post(`${import.meta.env.VITE_API_URL}/auth/google-login`, decoded);
+
+            const { token, username, email, role } = res.data;
+            console.log(res.data);
+            localStorage.setItem("token", token);
+            // localStorage.setItem("username", username);
+            // localStorage.setItem("email", email);
+            localStorage.setItem(
+                "user",
+                JSON.stringify({ username, email, role }) // giống với login thường
+            );
+            navigate("/"); // quay về trang chủ sau khi đăng nhập
+        } catch (err) {
+            console.error("Google login failed:", err);
+            alert("Đăng nhập bằng Google thất bại");
         }
     };
 
     return (
-        <div className={styles.container}>
-            <h2 className={styles.title}>Đăng Nhập</h2>
+        <section>
+            <Header />
+            <div className={styles.container}>
+                <h2 className={styles.title}>Đăng nhập</h2>
+                <Formik initialValues={initialValues} validationSchema={validationSchema} onSubmit={handleSubmit}>
+                    <Form className={styles.form}>
+                        <div className={styles.inputGroup}>
+                            <FaEnvelope className={styles.icon} />
+                            <Field name="email" type="email" placeholder="Email" />
+                        </div>
+                        <ErrorMessage name="email" component="div" className={styles.error} />
 
-            <form className={styles.form} onSubmit={formik.handleSubmit}>
-                <div className={styles.inputGroup}>
-                    <MdEmail className={styles.icon} />
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Email"
-                        className={styles.input}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.email}
-                    />
-                </div>
-                {formik.touched.email && formik.errors.email && <p className={styles.error}>{formik.errors.email}</p>}
+                        <div className={styles.inputGroup}>
+                            <FaLock className={styles.icon} />
+                            <Field name="password" type="password" placeholder="Mật khẩu" />
+                        </div>
+                        <ErrorMessage name="password" component="div" className={styles.error} />
 
-                <div className={styles.inputGroup}>
-                    <MdLock className={styles.icon} />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Mật khẩu"
-                        className={styles.input}
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}
-                    />
-                </div>
-                {formik.touched.password && formik.errors.password && (
-                    <p className={styles.error}>{formik.errors.password}</p>
-                )}
+                        <button type="submit" className={styles.btn}>
+                            Đăng nhập
+                        </button>
 
-                <div className={styles.options}>
-                    <Link to="/forgot-password" className={styles.link}>
-                        Quên mật khẩu?
-                    </Link>
-                </div>
+                        <div className={styles.divider}>hoặc</div>
 
-                <button type="submit" className={styles.button}>
-                    Đăng nhập
-                </button>
-            </form>
-
-            <div className={styles.divider}></div>
-
-            <button className={styles.googleButton}>
-                <FcGoogle size={20} />
-                <span>Đăng nhập bằng Google</span>
-            </button>
-
-            <p className={styles.registerPrompt}>
-                Chưa có tài khoản?{" "}
-                <Link to="/register" className={styles.link}>
-                    Đăng ký ngay
-                </Link>
-            </p>
-        </div>
+                        <div style={{ width: "100%" }}>
+                            <GoogleLogin
+                                onSuccess={handleGoogleLogin}
+                                onError={() => {
+                                    console.log("Google Login Failed");
+                                }}
+                            />
+                        </div>
+                        <div className={styles.footer}>
+                            <span onClick={() => navigate("/register")}>Chưa có tài khoản? Đăng ký ngay</span>
+                        </div>
+                    </Form>
+                </Formik>
+            </div>
+            <Product
+                title="PHỤ KIỆN HOT"
+                view="Xem tất cả phụ kiện"
+                viewAllLink="/dien-thoai"
+                products={[
+                    {
+                        id: 1,
+                        name: "Điện Thoại BlackBerry KEYone – Hàng Chính Hãng",
+                        price: "14,990,000đ",
+                        image: ["/images/mobileProduct/img01.jpg", "/images/mobileProduct/img01.1.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 2,
+                        name: "Điện Thoại iPhone X 64GB - Hàng Chính Hãng",
+                        price: "19,990,000đ",
+                        image: ["/images/mobileProduct/img02.jpg", "/images/mobileProduct/img02.2.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 3,
+                        name: "Điện Thoại iPhone 6s 32GB – Hàng Chính Hãng",
+                        price: "12,100,000đ",
+                        image: ["/images/mobileProduct/img03.jpg", "/images/mobileProduct/img03.3.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 4,
+                        name: "Điện Thoại iPhone 7 32GB – Hàng Chính Hãng",
+                        price: "14,300,000đ",
+                        image: ["/images/mobileProduct/img04.jpg", "/images/mobileProduct/img04.4.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 5,
+                        name: "Điện Thoại Samsung Galaxy S8 – Hàng Chính Hãng",
+                        price: "15,990,000đ",
+                        image: ["/images/mobileProduct/img05.jpg", "/images/mobileProduct/img05.5.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 6,
+                        name: "Điện Thoại Samsung Galaxy J7 Pro – Hàng Chính Hãng",
+                        price: "5,860,000đ",
+                        image: ["/images/mobileProduct/img06.jpg", "/images/mobileProduct/img06.6.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 7,
+                        name: "Điện Thoại Samsung Galaxy Note FE – Hàng Chính Hãng",
+                        price: "13,990,000đ",
+                        image: ["/images/mobileProduct/img07.jpg", "/images/mobileProduct/img07.7.jpg"],
+                        sale: true,
+                    },
+                    {
+                        id: 8,
+                        name: "Điện Thoại Samsung Galaxy Note 8 – Hàng Chính Hãng",
+                        price: "19,990,000đ",
+                        image: ["/images/mobileProduct/img08.jpg", "/images/mobileProduct/img08.8.jpg"],
+                        sale: true,
+                    },
+                ]}
+            />
+            <Footer />
+        </section>
     );
-}
+};
+
+export default Login;

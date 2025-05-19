@@ -1,0 +1,45 @@
+.wrapper {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .avatarBox {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  
+  .name {
+    font-weight: 500;
+    color: #fff;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 150%;
+    left: 0%;
+    background: #fff;
+    border-radius: 4px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5);
+    z-index: 10;
+    overflow: hidden;
+    min-width: 180px;
+  }
+  
+  .item {
+    padding: 10px 22px;
+    font-size: 14px;
+    transition: background 0.2s;
+    font-size: 16px;
+    &:hover {
+      background-color: #f2f2f2;
+    }
+  }
+  

@@ -4,11 +4,11 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import styles from "./Product.module.scss";
-import ProductItem from "../ProductItem/ProductItem"; 
+import ProductItem from "../ProductItem/ProductItem";
 
-const HotProduct = ({ title, view, viewAllLink, bannerImage, products, isHome = true }) => {
+const Product = ({ title, view, viewAllLink, bannerImage, products, isHome = true }) => {
     return (
-        <div className={styles.hotProduct}>
+        <div className={styles.Product}>
             <div className={styles.container}>
                 {isHome && (
                     <div className={styles.header}>
@@ -51,4 +51,4 @@ const HotProduct = ({ title, view, viewAllLink, bannerImage, products, isHome = 
     );
 };
 
-export default HotProduct;
+export default Product;
