@@ -14,7 +14,7 @@ function Navbar() {
             } catch (err) {
                 console.error("Lỗi khi load danh mục:", err);
             }
-        };
+        };  
 
         fetchCategories();
     }, []);

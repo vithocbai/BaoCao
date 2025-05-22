@@ -32,7 +32,7 @@ function HeaderTop() {
 
                     <div className={styles.left}>
                         <a href="/" className={styles.logo}>
-                            <img src="./logo/logo.png" alt="" />
+                            <img src="/logo/logo.png" alt="" />
                         </a>
                         <div className={styles.search}>
                             <input type="text" placeholder="Nhập tên điện thoại, máy tính, phụ kiện...cần tìm" />

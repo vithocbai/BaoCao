@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -6,7 +6,19 @@ import "swiper/css/navigation";
 import styles from "./Product.module.scss";
 import ProductItem from "../ProductItem/ProductItem";
 
-const Product = ({ title, view, viewAllLink, bannerImage, products, isHome = true }) => {
+const Product = ({ title, view, viewAllLink, bannerImage, isHome = true }) => {
+    const [products, setProducts] = useState([]);
+
+    useEffect(() => {
+        fetch("http://localhost:5000/api/products") // 👈 API của bạn
+            .then((res) => res.json())
+            .then((data) => {
+                // console.log("📦 Dữ liệu từ backend:", data);
+                setProducts(data);
+            })
+            .catch((err) => console.error("❌ Lỗi khi lấy sản phẩm:", err));
+    }, []);
+
     return (
         <div className={styles.Product}>
             <div className={styles.container}>
@@ -39,8 +51,8 @@ const Product = ({ title, view, viewAllLink, bannerImage, products, isHome = tru
                             }}
                         >
                             {products.map((item) => (
-                                <SwiperSlide key={item.id}>
-                                    <ProductItem item={item} /> {/* <<< Thay thế bằng component mới */}
+                                <SwiperSlide key={item._id}>
+                                    <ProductItem item={item} />
                                 </SwiperSlide>
                             ))}
                         </Swiper>

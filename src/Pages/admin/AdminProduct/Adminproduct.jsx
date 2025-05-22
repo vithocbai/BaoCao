@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styles from "./AdminProduct.module.scss";
-import { FaEdit, FaTrash, FaPlus } from "react-icons/fa";
+import { FaPlus } from "react-icons/fa";
 import AdminProductDelete from "@pages/admin/AdminProductDelete/AdminProductDelete";
+import { AiTwotoneEdit } from "react-icons/ai";
+import { MdOutlineDelete } from "react-icons/md";
+import ProductAddModal from "@pages/admin/AdminProductAdd/ProductAddModal";
+import ProductEditModal from "@pages/admin/AdminProductEdit/ProductEditModal";
 
 const AdminProduct = () => {
     const [products, setProducts] = useState([]);
     const [showDeleteModal, setShowDeleteModal] = useState(false);
     const [selectedProductId, setSelectedProductId] = useState(null);
+    const [showModal, setShowModal] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null); // chứa sản phẩm đang sửa
 
     useEffect(() => {
         fetchProducts();
@@ -29,6 +35,7 @@ const AdminProduct = () => {
     };
 
     const handleDeleteConfirmed = async () => {
+        console.log("Xóa product ID:", selectedProductId);
         try {
             const res = await fetch(`http://localhost:5000/api/products/${selectedProductId}`, {
                 method: "DELETE",
@@ -50,59 +57,75 @@ const AdminProduct = () => {
         }
     };
 
+    useEffect(() => {
+        fetchProducts();
+    }, []);
+
     return (
         <div className={styles.wrapper}>
             <div className={styles.header}>
-                <h2>Quản lý sản phẩm</h2>
-                <Link to="/admin/products/add" className={styles.addBtn}>
+                <h2 className={styles.title}>Quản lý sản phẩm</h2>
+                <button className={styles.addBtn} onClick={() => setShowModal(true)}>
                     <FaPlus /> Thêm sản phẩm
-                </Link>
+                </button>
             </div>
 
             <table className={styles.table}>
                 <thead>
                     <tr>
-                        <th>Ảnh</th>
-                        <th>Tên</th>
-                        <th>Giá</th>
+                        <th>Tên sản phẩm</th>
+                        <th>Giá (VND)</th>
+                        <th>Giảm giá (%)</th>
                         <th>Danh mục</th>
+                        <th>Tồn kho</th>
                         <th>Thương hiệu</th>
-                        <th>Kho</th>
-                        <th>Thao tác</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
+
                 <tbody>
                     {products.map((product) => (
                         <tr key={product._id}>
                             <td>
-                                {/* <img
-                                    src={product.images?.[0] || "/default.jpg"}
-                                    alt={product.name}
-                                    className={styles.image}
-                                /> */}
-                                <img
-                                    src={`http://localhost:5000${product.images?.[0] || "/uploads/default.jpg"}`}
-                                    alt={product.name}
-                                    className={styles.image}
-                                />
+                                <span className={styles.name}>{product.name}</span>
                             </td>
-                            <td>{product.name}</td>
                             <td>{Number(product.price).toLocaleString()}₫</td>
+                            <td>{product.discountPercent}%</td>
                             <td>{product.category}</td>
-                            <td>{product.brand}</td>
                             <td>{product.stock}</td>
+                            <td>{product.brand}</td>
                             <td>
-                                <Link to={`/admin/products/edit/${product._id}`} className={styles.editBtn}>
-                                    <FaEdit />
-                                </Link>
+                                <button onClick={() => setEditingProduct(product)} className={styles.editBtn}>
+                                    <AiTwotoneEdit />
+                                    Sửa
+                                </button>
                                 <button onClick={() => openDeleteModal(product._id)} className={styles.deleteBtn}>
-                                    <FaTrash />
+                                    <MdOutlineDelete />
+                                    Xóa
                                 </button>
                             </td>
                         </tr>
                     ))}
                 </tbody>
             </table>
+
+            {showModal && (
+                <ProductAddModal
+                    onClose={() => setShowModal(false)}
+                    onSuccess={() => {
+                        fetchProducts();
+                        setShowModal(false);
+                    }}
+                />
+            )}
+
+            {editingProduct && (
+                <ProductEditModal
+                    product={editingProduct}
+                    onClose={() => setEditingProduct(null)}
+                    onSuccess={fetchProducts} // hàm reload lại danh sách
+                />
+            )}
 
             {showDeleteModal && (
                 <AdminProductDelete

@@ -14,8 +14,7 @@ import DashboardAdmin from "@pages/admin/DashboardAdmin/DashboardAdmin";
 import AdminProduct from "@pages/admin/AdminProduct/Adminproduct";
 import AdminCategory from "@pages/admin/AdminCategory/AdminCategory";
 import AdminUser from "@pages/admin/AdminUser/AdminUser";
-import AdminProductAdd from "@pages/admin/AdminProductAdd/AdminProductAdd";
-import AdminProductEdit from "@pages/admin/AdminProductEdit/AdminProductEdit";
+
 
 const initialProducts = [
     {
@@ -47,8 +46,8 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/dien-thoai" element={<SmartPhone />} />
                     <Route path="/laptop" element={<Laptop />} />
-                    {/* <Route path="/detail" element={<ProductDetail />} /> */}
                     <Route path="/detail/:productId" element={<ProductDetail />} />
+
                     <Route path="/login" element={<Login />} />
                     <Route path="/register" element={<Register />} />
                     <Route
@@ -72,8 +71,6 @@ function App() {
                     >
                         <Route index element={<DashboardAdmin />} />
                         <Route path="products" element={<AdminProduct />} />
-                        <Route path="products/add" element={<AdminProductAdd />} />
-                        <Route path="/admin/products/edit/:id" element={<AdminProductEdit />} />
                         <Route path="/admin/categories" element={<AdminCategory />} />
                         <Route path="/admin/users" element={<AdminUser />} />
                     </Route>
