@@ -14,7 +14,7 @@ function Navbar() {
             } catch (err) {
                 console.error("Lỗi khi load danh mục:", err);
             }
-        };  
+        };
 
         fetchCategories();
     }, []);
@@ -23,14 +23,20 @@ function Navbar() {
         <div className={styles.navbar}>
             <div className={styles.container}>
                 <ul className={styles.menu}>
-                    {categories.map((cat) => (
-                        <li key={cat._id}>
-                            <NavLink to={`/${cat.slug}`} className={({ isActive }) => (isActive ? styles.active : "")}>
-                                <img className={styles.icon} src={cat.icon} alt={cat.name} />
-                                {cat.name}
-                            </NavLink>
-                        </li>
-                    ))}
+                    {categories
+                        .slice()
+                        .reverse()
+                        .map((cat) => (
+                            <li key={cat._id}>
+                                <NavLink
+                                    to={`/${cat.slug}`}
+                                    className={({ isActive }) => (isActive ? styles.active : "")}
+                                >
+                                    <img className={styles.icon} src={cat.icon} alt={cat.name} />
+                                    {cat.name}
+                                </NavLink>
+                            </li>
+                        ))}
                 </ul>
             </div>
         </div>

@@ -1,0 +1,158 @@
+.orderContainer {
+  padding: 24px;
+  background-color: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.06);
+}
+
+.title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  color: #333;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.thead {
+  background-color: #f3f4f6;
+}
+
+.tr {}
+
+.th,
+.td {
+  padding: 14px 12px;
+  text-align: left;
+  border: 1px solid #e5e7eb;
+}
+
+.th {
+  font-weight: 600;
+  color: #374151;
+  background-color: #f9fafb;
+}
+
+.td {
+  color: #4b5563;
+  background-color: #fff;
+}
+
+/* Nút Xem chi tiết */
+.viewBtn {
+  background-color: #2563eb;
+  color: white;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-weight: 500;
+}
+
+.viewBtn:hover {
+  background-color: #1d4ed8;
+}
+
+/* Select trạng thái */
+.statusSelect {
+  padding: 6px 10px;
+  margin-left: 10px;
+  border-radius: 6px;
+  border: 1px solid #d1d5db;
+  background-color: #f9fafb;
+  color: #374151;
+  font-weight: 500;
+}
+
+/* Trạng thái */
+.status {
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  position: relative;
+}
+
+/* Chờ xác nhận */
+.pending {
+  background-color: #fef9c3;
+  color: #b45309;
+}
+
+.pending::after {
+  content: '';
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background-color: #facc15;
+  border-radius: 50%;
+  position: absolute;
+  left: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* Đã giao hàng */
+.delivered {
+  background-color: #dcfce7;
+  color: #15803d;
+}
+
+/* Đã hủy */
+.cancelled {
+  background-color: #fee2e2;
+  color: #b91c1c;
+}
+
+
+.statusSelect {
+  padding: 6px 12px;
+  padding-right: 32px; // chừa chỗ cho icon
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background-color: #ffffff;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg fill='none' stroke='%234B5563' stroke-width='2' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M19 9l-7 7-7-7'%3E%3C/path%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 10px center;
+  background-size: 16px 16px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    border-color: #9ca3af;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59, 130, 246, 0.3);
+  }
+}
+
+
+.statusSelect.pending {
+  background-color: #fef9c3;
+  color: #92400e;
+  border-color: #fde68a;
+}
+
+.statusSelect.delivered {
+  background-color: #dcfce7;
+  color: #166534;
+  border-color: #bbf7d0;
+}
+
+.statusSelect.cancelled {
+  background-color: #fee2e2;
+  color: #991b1b;
+  border-color: #fecaca;
+}

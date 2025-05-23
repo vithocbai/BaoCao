@@ -6,6 +6,7 @@ import AdminProductDelete from "@pages/admin/AdminProductDelete/AdminProductDele
 import { AiTwotoneEdit } from "react-icons/ai";
 import { MdOutlineDelete } from "react-icons/md";
 import ProductAddModal from "@pages/admin/AdminProductAdd/ProductAddModal";
+// import ProductEditModal1 from "@pages/admin/AdminProductEdit/ProductEditModal1";
 import ProductEditModal from "@pages/admin/AdminProductEdit/ProductEditModal";
 
 const AdminProduct = () => {

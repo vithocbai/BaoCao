@@ -14,28 +14,18 @@ import DashboardAdmin from "@pages/admin/DashboardAdmin/DashboardAdmin";
 import AdminProduct from "@pages/admin/AdminProduct/Adminproduct";
 import AdminCategory from "@pages/admin/AdminCategory/AdminCategory";
 import AdminUser from "@pages/admin/AdminUser/AdminUser";
+import AdminOrderTable from "@pages/admin/AdminOrderTable/AdminOrderTable";
 
-
-const initialProducts = [
+const orders = [
     {
-        id: 1,
-        name: "iPhone 15 Pro Max",
-        price: 32990000,
-        category: "Điện thoại",
-        brand: "Apple",
-        stock: 12,
-        image: "/images/products/iphone-15-pm.jpg",
+        id: "6810d09...",
+        customer: "Trần Trọng Luân",
+        date: "00:31:53 30/4/2025",
+        total: 1868708,
+        paymentMethod: "Thanh toán khi nhận hàng",
+        status: "Chờ xác nhận",
     },
-    {
-        id: 2,
-        name: "Samsung Galaxy S24 Ultra",
-        price: 28990000,
-        category: "Điện thoại",
-        brand: "Samsung",
-        stock: 7,
-        image: "/images/products/galaxy-s24-ultra.jpg",
-    },
-    // ...
+    // Các đơn khác...
 ];
 
 function App() {
@@ -73,6 +63,7 @@ function App() {
                         <Route path="products" element={<AdminProduct />} />
                         <Route path="/admin/categories" element={<AdminCategory />} />
                         <Route path="/admin/users" element={<AdminUser />} />
+                        <Route path="/admin/orders" element={<AdminOrderTable orders={orders}/>} />
                     </Route>
                 </Routes>
             </Router>

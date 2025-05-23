@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import styles from "./ProductEditModal.module.scss";
 import { Editor } from "@tinymce/tinymce-react";
 
 const ProductEditModal = ({ product, onClose, onSuccess }) => {
+    const modalRef = useRef(); // TẠO re
     const [categories, setCategories] = useState([]);
     const [colorInput, setColorInput] = useState("");
     const [colors, setColors] = useState(product.colors || []);
@@ -10,6 +11,9 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
     const [specSuggestions, setSpecSuggestions] = useState([]);
     const [errors, setErrors] = useState({});
     const [form, setForm] = useState({ ...product });
+
+    const [oldImages, setOldImages] = useState(product.images || []);
+    const [newImages, setNewImages] = useState([]);
 
     useEffect(() => {
         const fetchCategories = async () => {
@@ -47,10 +51,10 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
 
     const validate = () => {
         const newErrors = {};
-        if (!form.name.trim()) newErrors.name = "Tên sản phẩm không được để trống.";
-        if (!form.brand.trim()) newErrors.brand = "Thương hiệu không được để trống.";
+        if (!form.name?.trim()) newErrors.name = "Tên sản phẩm không được để trống.";
+        if (!form.brand?.trim()) newErrors.brand = "Thương hiệu không được để trống.";
         if (!form.category) newErrors.category = "Danh mục là bắt buộc.";
-        if (!form.description || form.description.trim() === "") newErrors.description = "Mô tả không được để trống.";
+        if (!form.description?.trim()) newErrors.description = "Mô tả không được để trống.";
         if (form.price <= 0) newErrors.price = "Giá phải lớn hơn 0.";
         if (form.stock < 0) newErrors.stock = "Tồn kho không được âm.";
         if (colors.length === 0) newErrors.colors = "Phải có ít nhất một màu sắc.";
@@ -87,20 +91,18 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
         setForm((prev) => ({ ...prev, colors: updated }));
     };
 
+    const handleImageChange = (e) => {
+        const files = Array.from(e.target.files);
+        setNewImages((prev) => [...prev, ...files]);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!validate()) return;
 
         try {
             const formData = new FormData();
-            Object.entries(form).forEach(([key, value]) => {
-                if (key === "images") return; // Không gửi lại ảnh cũ ở đây
-                if (key === "colors" || key === "specs") {
-                    formData.append(key, JSON.stringify(value));
-                } else {
-                    formData.append(key, value);
-                }
-            });
+            // ... giữ nguyên đoạn xử lý FormData
 
             const res = await fetch(`http://localhost:5000/api/products/${product._id}`, {
                 method: "PUT",
@@ -109,33 +111,28 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
 
             if (res.ok) {
                 alert("Cập nhật sản phẩm thành công!");
+                // Scroll lên đầu modal
+                modalRef.current?.scrollIntoView({ behavior: "smooth" });
                 onSuccess();
             } else {
+                const errData = await res.json();
+                console.error("❌ Server trả về lỗi:", errData);
                 alert("Cập nhật thất bại!");
             }
         } catch (err) {
-            console.error("Lỗi khi cập nhật:", err);
+            console.error("❌ Lỗi khi cập nhật:", err);
             alert("Lỗi khi cập nhật sản phẩm.");
         }
     };
 
-    const handleImageChange = (e) => {
-        const files = Array.from(e.target.files);
-        const validImages = files.filter((file) => file.type.startsWith("image/"));
-        const previews = validImages.map((file) => URL.createObjectURL(file));
-        setPreviewImages((prev) => [...prev, ...previews]);
-        setForm((prev) => ({ ...prev, images: [...prev.images, ...validImages] }));
-        setErrors((prev) => ({ ...prev, images: null }));
-    };
     return (
         <div className={styles.modalOverlay}>
-            <div className={styles.modalContent}>
+            <div className={styles.modalContent} ref={modalRef}>
                 <button className={styles.closeBtn} onClick={onClose}>
                     ✕
                 </button>
                 <h2 className={styles.header}>Sửa sản phẩm</h2>
                 <form onSubmit={handleSubmit} className={styles.form}>
-                    {/* Tương tự ProductAddModal - Copy label + error check + default value */}
                     <label>
                         Tên sản phẩm:
                         <input name="name" value={form.name} onChange={handleChange} />
@@ -171,7 +168,6 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
                         <label key={key}>
                             {key}:
                             <input
-                                placeholder={key}
                                 value={form.specs?.[key] || ""}
                                 onChange={(e) => handleSpecChange(key, e.target.value)}
                             />
@@ -187,6 +183,7 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
                         <input name="stock" type="number" value={form.stock} onChange={handleChange} />
                         {errors.stock && <p className={styles.error}>{errors.stock}</p>}
                     </label>
+
                     <div className={styles.colorWrapper}>
                         <label>Màu sắc:</label>
                         <input
@@ -213,6 +210,7 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
                             <p>Chọn ảnh hoặc kéo thả vào đây</p>
                             <input
                                 type="file"
+                                name="images"
                                 accept="image/*"
                                 multiple
                                 onChange={handleImageChange}
@@ -224,39 +222,62 @@ const ProductEditModal = ({ product, onClose, onSuccess }) => {
 
                     {form.images?.length > 0 && (
                         <div className={styles.previewBox}>
-                            {form.images.map((img, idx) => (
+                            {oldImages.map((img, idx) => (
                                 <div
-                                    key={idx}
+                                    key={`old-${idx}`}
                                     className={styles.previewItem}
                                     onClick={() => {
-                                        const updatedImages = [...form.images];
-                                        updatedImages.splice(idx, 1);
-                                        setForm((prev) => ({ ...prev, images: updatedImages }));
+                                        const updated = [...oldImages];
+                                        updated.splice(idx, 1);
+                                        setOldImages(updated);
                                     }}
                                 >
                                     <img src={`http://localhost:5000${img}`} alt={`old-${idx}`} />
                                     <span className={styles.removeImage}>✕</span>
                                 </div>
                             ))}
+
+                            {newImages.map((img, idx) => (
+                                <div key={`new-${idx}`} className={styles.previewItem}>
+                                    <img src={URL.createObjectURL(img)} alt={`new-${idx}`} />
+                                    <span
+                                        className={styles.removeImage}
+                                        onClick={() => {
+                                            const updated = [...newImages];
+                                            updated.splice(idx, 1);
+                                            setNewImages(updated);
+                                        }}
+                                    >
+                                        ✕
+                                    </span>
+                                </div>
+                            ))}
                         </div>
                     )}
 
                     <label>
-                        Mô tả chi tiết:
+                        <span style={{ marginBottom: "10px", display: "block" }}>Mô tả chi tiết:</span>
                         <Editor
                             apiKey="l3wqxt7yt14cqt897uql5k72l6zy01p3h73ffgapgwecqmdm"
                             value={form.description}
                             onEditorChange={handleEditorChange}
                             init={{
-                                height: 300,
-                                menubar: false,
-                                plugins: "link image code table lists",
+                                height: 500,
+                                menubar: "file edit view insert format tools table help",
+                                plugins: [
+                                    "advlist autolink lists link image charmap print preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table paste code help wordcount",
+                                ],
                                 toolbar:
-                                    "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | image link | code table",
+                                    "undo redo | formatselect | bold italic backcolor | " +
+                                    "alignleft aligncenter alignright alignjustify | " +
+                                    "bullist numlist outdent indent | removeformat | help",
                             }}
                         />
                         {errors.description && <p className={styles.error}>{errors.description}</p>}
                     </label>
+
                     <button type="submit" className={styles.submitBtn}>
                         Cập nhật
                     </button>

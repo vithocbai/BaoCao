@@ -22,14 +22,14 @@ const Footer = () => {
                     <div className={styles.footerCol}>
                         <div className={styles.footerPayment}>
                             <p>Hỗ trợ thanh toán</p>
-                            <img src="./images/footer/icon_payment.png" alt="Phương thức thanh toán" />
+                            <img src="/images/footer/icon_payment.png" alt="Phương thức thanh toán" />
                         </div>
 
                         <div className={styles.advise}>
                             <p>Tư vấn miễn phí (24/7) (+84) 0313-728-397</p>
                             <p>Góp ý, phản ánh (8h00 - 22h00) (+84) 0313-728-397</p>
                         </div>
-                        <img src="./images/footer/icon_cong_nhan.png" alt="Công nhận " />
+                        <img src="/images/footer/icon_cong_nhan.png" alt="Công nhận " />
                     </div>
                 </div>
             </div>
@@ -37,7 +37,7 @@ const Footer = () => {
             <div className={styles.footerBottom}>
                 <div className={styles.container}>
                     <p>
-                        © All rights reserved. Thiết kế website bởi <img src="./images/footer/copyright.png" alt="" />
+                        © All rights reserved. Thiết kế website bởi <img src="/images/footer/copyright.png" alt="" />
                         <strong>Mona Media</strong>
                     </p>
                 </div>

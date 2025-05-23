@@ -27,12 +27,13 @@ const ProductItem = ({ item, setHeight = false }) => {
                             style={{
                                 minHeight: setHeight ? "197px" : "293px",
                             }}
-                            src={item.images[1]}
+                             src={`http://localhost:5000${item.images?.[1]}`}
                             alt={`${item.name} hover`}
                         />
                     )}
+                
+                    {Number(item.discountPercent) > 0 && <span className={styles.saleTag}>Giảm giá</span>}
 
-                    {item.discountPercent && <span className={styles.saleTag}>Giảm giá</span>}
                 </div>
 
                 <div className={styles.info}>

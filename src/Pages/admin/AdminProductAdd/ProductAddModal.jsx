@@ -266,13 +266,20 @@ const ProductAddModal = ({ onClose, onSuccess }) => {
                             value={form.description}
                             onEditorChange={handleEditorChange}
                             init={{
-                                height: 300,
-                                menubar: false,
-                                plugins: "link image code table lists",
+                                height: 500,
+                                menubar: "file edit view insert format tools table help",
+                                plugins: [
+                                    "advlist autolink lists link image charmap print preview anchor",
+                                    "searchreplace visualblocks code fullscreen",
+                                    "insertdatetime media table paste code help wordcount",
+                                ],
                                 toolbar:
-                                    "undo redo | bold italic | alignleft aligncenter alignright | bullist numlist | image link | code table",
+                                    "undo redo | formatselect | bold italic backcolor | " +
+                                    "alignleft aligncenter alignright alignjustify | " +
+                                    "bullist numlist outdent indent | removeformat | help",
                             }}
                         />
+
                         {errors.description && <p className={styles.error}>{errors.description}</p>}
                     </label>
 

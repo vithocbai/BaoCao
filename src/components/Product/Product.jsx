@@ -6,18 +6,18 @@ import "swiper/css/navigation";
 import styles from "./Product.module.scss";
 import ProductItem from "../ProductItem/ProductItem";
 
-const Product = ({ title, view, viewAllLink, bannerImage, isHome = true }) => {
+const Product = ({ title, view, viewAllLink, bannerImage, isHome = true, category }) => {
     const [products, setProducts] = useState([]);
 
     useEffect(() => {
-        fetch("http://localhost:5000/api/products") // 👈 API của bạn
+        fetch("http://localhost:5000/api/products")
             .then((res) => res.json())
             .then((data) => {
-                // console.log("📦 Dữ liệu từ backend:", data);
-                setProducts(data);
+                const filtered = category ? data.filter((item) => item.category === category) : data;
+                setProducts(filtered);
             })
-            .catch((err) => console.error("❌ Lỗi khi lấy sản phẩm:", err));
-    }, []);
+            .catch((err) => console.error("Lỗi khi lấy sản phẩm:", err));
+    }, [category]); 
 
     return (
         <div className={styles.Product}>
@@ -36,7 +36,6 @@ const Product = ({ title, view, viewAllLink, bannerImage, isHome = true }) => {
                             <img src={bannerImage} alt="Banner" />
                         </div>
                     )}
-
                     <div className={styles.slider}>
                         <Swiper
                             modules={[Navigation]}

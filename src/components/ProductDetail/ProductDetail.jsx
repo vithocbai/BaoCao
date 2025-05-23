@@ -2,11 +2,9 @@ import React, { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import Header from "@components/Header/Header";
 import styles from "./ProductDetail.module.scss";
-// import ProductCategories from "@components/ProductCategories/ProductCategories";
 import { MdNavigateNext } from "react-icons/md";
 import { GrFormPrevious } from "react-icons/gr";
-// import ProductDescription from "@components/ProductDescription/ProductDescription";
-// import ProductFullDescription from "../ProductFullDescription/ProductFullDescription";
+
 import ColorSelector from "@components/ColorSelector/ColorSelector";
 import Footer from "@components/Footer/Footer";
 
@@ -19,7 +17,8 @@ const ProductDetail = () => {
     const [fade, setFade] = useState(false);
     const [selectedColor, setSelectedColor] = useState("");
 
-    // console.log("Product ID:", productId);
+    const [colorError, setColorError] = useState("");
+    const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
         const fetchProduct = async () => {
@@ -68,6 +67,10 @@ const ProductDetail = () => {
         setIsZooming(false);
     };
 
+    const handleEditorChange = (content) => {
+        setForm({ ...form, description: content });
+    };
+
     if (!product) return <p style={{ padding: 24 }}>Đang tải sản phẩm...</p>;
 
     return (
@@ -80,7 +83,11 @@ const ProductDetail = () => {
                             <div className={styles.imageContainer}>
                                 <img
                                     key={currentIndex}
-                                    src={product.images?.[currentIndex] || "/default.jpg"}
+                                    src={
+                                        product.images?.[currentIndex]
+                                            ? `http://localhost:5000${product.images[currentIndex]}`
+                                            : "/default.jpg"
+                                    }
                                     alt="Product"
                                     className={`${styles.mainImage} ${fade ? styles.fade : ""}`}
                                     style={isZooming ? { transform: "scale(2)", transformOrigin: zoomOrigin } : {}}
@@ -100,7 +107,7 @@ const ProductDetail = () => {
                             {(product.images || []).map((img, idx) => (
                                 <img
                                     key={idx}
-                                    src={img}
+                                    src={`http://localhost:5000${img}`}
                                     alt={`Thumbnail ${idx}`}
                                     className={`${styles.thumbnail} ${currentIndex === idx ? styles.active : ""}`}
                                     onClick={() => changeImage(idx)}
@@ -116,37 +123,65 @@ const ProductDetail = () => {
                         <span> / </span>
                         <Link to={`/danh-muc/${product.category}`}>{product.category}</Link>
                         <span> / </span>
-                        <span>{product.name}</span>
+                        <span>{product.brand}</span>
                     </div>
                     <h1>{product.name}</h1>
-
                     <div className={styles.isDivider}></div>
                     <p className={styles.price}>{Number(product.price).toLocaleString()}₫</p>
                     <ul className={styles.features}>
                         <li>Thương hiệu: {product.brand}</li>
                         <li>Tồn kho: {product.stock}</li>
+                        {product.specs &&
+                            Object.entries(product.specs).map(([key, value], index) => (
+                                <li key={index}>
+                                    {key}: {value}
+                                </li>
+                            ))}
                     </ul>
+
                     {product.colors && product.colors.length > 0 && (
                         <ColorSelector
-                            colors={product.colors}
+                            colors={["-- Chọn màu --", ...product.colors]}
                             selectedColor={selectedColor}
-                            onSelect={setSelectedColor}
+                            onSelect={(color) => {
+                                setSelectedColor(color);
+                                setColorError("");
+                            }}
                         />
                     )}
+
                     <div className={styles.actions}>
                         <div className={styles.quantity}>
-                            <button>-</button>
-                            <input type="text" value="1" readOnly />
-                            <button>+</button>
+                            <button onClick={() => setQuantity((prev) => Math.max(1, prev - 1))}>-</button>
+                            <input type="text" value={quantity} readOnly />
+                            <button onClick={() => setQuantity((prev) => prev + 1)}>+</button>
                         </div>
-                        <button className={styles.addToCart}>THÊM VÀO GIỎ</button>
+                        <button
+                            className={styles.addToCart}
+                            disabled={!selectedColor || selectedColor === "-- Chọn màu --"}
+                            onClick={() => {
+                                if (!selectedColor || selectedColor === "-- Chọn màu --") {
+                                    setColorError("Vui lòng chọn màu hợp lệ.");
+                                    return;
+                                }
+
+                                setColorError("");
+                                console.log("Thêm vào giỏ:", { productId, selectedColor });
+                                // TODO: xử lý thêm vào giỏ tại đây
+                            }}
+                        >
+                            THÊM VÀO GIỎ
+                        </button>
                     </div>
+
+                    {colorError && <p className={styles.error}>{colorError}</p>}
+
+                    {colorError && <p className={styles.error}>{colorError}</p>}
                 </div>
             </div>
-
-            {/* <ProductDescription />
-            <ProductFullDescription />
-            <ProductCategories /> */}
+            <div className={styles.previewDescription}>
+                <div dangerouslySetInnerHTML={{ __html: product.description }} />
+            </div>
 
             <Footer />
         </section>

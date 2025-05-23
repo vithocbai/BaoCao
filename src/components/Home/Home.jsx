@@ -12,7 +12,12 @@ function Home() {
             <section style={{ backgroundColor: "#f3f3f3" }}>
                 <Banner />
 
-                <Product title="ĐIỆN THOẠI ĐƯỢC QUAN TÂM" view="Xem tất cả điện thoại" viewAllLink="/dien-thoai" />
+                <Product
+                    title="ĐIỆN THOẠI ĐƯỢC QUAN TÂM"
+                    view="Xem tất cả điện thoại"
+                    viewAllLink="/dien-thoai"
+                    category="dien-thoai"
+                />
 
                 <TopBrand />
 
@@ -21,6 +26,7 @@ function Home() {
                     view="Xem tất cả laptop"
                     viewAllLink="/dien-thoai"
                     bannerImage="/images/mobileProduct/bannerLaptop.jpg"
+                    category="laptop"
                     // products={[
                     //     {
                     //         id: 1,
