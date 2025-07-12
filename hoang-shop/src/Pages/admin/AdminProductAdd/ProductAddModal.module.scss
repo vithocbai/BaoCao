@@ -1,0 +1,274 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modalContainer {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 1000px;
+    max-height: 96vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.modalHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.modalTitle {
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1.8rem;
+    color: #007bff;
+    margin: 0 auto;
+}
+
+.modalCloseButton {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #555;
+    transition: color 0.2s ease;
+
+    &:hover {
+        color: #000;
+    }
+}
+
+productForm {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+// Thêm class này vào
+.fullWidth {
+    grid-column: 1 / -1;
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+}
+
+.formLabel {
+    margin-top: 14px;
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #444;
+}
+
+.formInput,
+.formSelect {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    transition: border-color 0.2s ease;
+
+    &:focus {
+        outline: none;
+        border-color: #007bff;
+    }
+}
+
+.formError {
+    color: #dc3545;
+    font-size: 0.85rem;
+    margin-top: 5px;
+}
+
+.inputWithButton {
+    display: flex;
+    gap: 10px;
+
+    .formInput {
+        flex-grow: 1;
+    }
+}
+
+.actionButton {
+    width: 160px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+.colorTagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.colorTag {
+    background-color: #e9ecef;
+    border: 1px solid #ced4da;
+    padding: 6px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+
+    &:hover {
+        background-color: #dc3545;
+        color: #fff;
+        border-color: #dc3545;
+    }
+}
+
+.imageUploadBox {
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        border-color: #0056b3;
+        background-color: #f8f9fa;
+    }
+}
+
+.uploadIcon {
+    font-size: 3rem;
+    margin-bottom: 10px;
+    display: block;
+    color: #007bff;
+}
+
+.uploadInput {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.imagePreviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.imagePreviewItem {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+
+    &:hover .removeImageButton {
+        opacity: 1;
+    }
+}
+
+.imagePreview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.removeImageButton {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #fff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.8rem;
+    cursor: pointer;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.tinymceEditor {
+    margin-top: 10px;
+}
+
+.formActions {
+    grid-column: 1 / -1;
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+.submitButton,
+.cancelButton {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 500;
+    transition: background-color 0.2s ease, opacity 0.2s ease;
+}
+
+.submitButton {
+    background-color: #24587e;
+    color: #fff;
+
+    &:hover {
+        background-color: #327ebc;
+    }
+}
+
+.cancelButton {
+    background-color: #657481;
+    color: #fff;
+
+    &:hover {
+        background-color: #5a6268;
+    }
+}

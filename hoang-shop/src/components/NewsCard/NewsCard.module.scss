@@ -1,0 +1,85 @@
+.newsCard {
+  display: block; // Link toàn bộ card
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  overflow: hidden;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+  background-color: #fff;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  }
+
+  .imageWrapper {
+    position: relative;
+    width: 100%;
+    padding-top: 60%; // Tỷ lệ khung hình 16:10 hoặc 4:3, điều chỉnh nếu cần (ví dụ 75% cho 4:3)
+    overflow: hidden;
+  }
+
+  .newsImage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &:hover .newsImage {
+    transform: scale(1.05);
+  }
+
+  .dateOverlay {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background-color: #007bff; // Màu nền ngày tháng
+    color: #fff;
+    padding: 8px 12px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    text-align: center;
+    line-height: 1.2;
+
+    .day {
+      display: block;
+      font-size: 1.4em;
+    }
+    .monthYear {
+      display: block;
+    }
+  }
+
+  .content {
+    padding: 15px;
+
+    .title {
+      font-size: 1.2em;
+      margin-bottom: 10px;
+      line-height: 1.4;
+      color: #333;
+      display: -webkit-box; // Giới hạn số dòng
+      -webkit-line-clamp: 2; // Giới hạn 2 dòng
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .description {
+      font-size: 0.9em;
+      color: #666;
+      line-height: 1.5;
+      display: -webkit-box;
+      -webkit-line-clamp: 3; // Giới hạn 3 dòng mô tả
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+} 

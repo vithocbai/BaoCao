@@ -1,0 +1,41 @@
+.sidebar {
+    min-width: 250px;
+    background-color: #f8f9fa;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+}
+
+.title {
+    font-size: 18px;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
+
+.menu {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item {
+    padding: 12px;
+    cursor: pointer;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    transition: background 0.2s;
+}
+
+.item:hover {
+    background-color: #e6f0ff;
+}
+
+.active {
+    background-color: #cce0ff;
+    font-weight: bold;
+}
+
+.icon {
+    margin-right: 8px;
+    font-size: 20px;
+    vertical-align: middle;
+}

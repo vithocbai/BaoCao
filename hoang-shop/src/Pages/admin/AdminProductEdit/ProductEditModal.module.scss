@@ -1,0 +1,267 @@
+.modalOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.closeBtnWrapper {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    z-index: 1001; /* Đảm bảo nút đóng nằm trên modal */
+}
+
+.closeBtn {
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: #fff;
+    transition: color 0.2s ease-in-out;
+
+    &:hover {
+        color: #ddd;
+    }
+}
+
+.modalContent {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    width: 90%;
+    max-width: 1000px; /* Giới hạn chiều rộng tối đa */
+    max-height: 96vh; /* Giới hạn chiều cao tối đa */
+    overflow-y: auto; /* Thêm scroll nếu nội dung quá dài */
+    position: relative;
+    box-sizing: border-box; /* Đảm bảo padding không làm tăng kích thước */
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #333;
+    font-size: 2rem;
+}
+
+.form {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+
+    @media (min-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+.formGroup {
+    display: flex;
+    flex-direction: column;
+
+    &.fullWidth {
+        grid-column: 1 / -1;
+    }
+}
+
+.formLabel {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: #555;
+}
+
+.formInput,
+.formSelect {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1rem;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+    }
+}
+
+.error {
+    color: #dc3545;
+    font-size: 0.875rem;
+    margin-top: 5px;
+}
+
+.inputWithButton {
+    display: flex;
+    gap: 10px;
+
+    .formInput {
+        flex-grow: 1;
+    }
+}
+
+.actionButton {
+    width: 140px;
+    padding: 10px 15px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+
+    &:hover {
+        background-color: #0056b3;
+    }
+}
+
+.colorTagList {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 10px;
+
+    .colorTag {
+        background-color: #e9ecef;
+        padding: 6px 12px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        cursor: pointer;
+        transition: background-color 0.2s ease-in-out;
+
+        &:hover {
+            background-color: #dc3545;
+            color: white;
+        }
+    }
+}
+
+.imageUploadBox {
+    border: 2px dashed #007bff;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+    position: relative;
+    overflow: hidden;
+
+    &:hover {
+        background-color: #f0f8ff;
+        border-color: #0056b3;
+    }
+
+    .uploadIcon {
+        font-size: 3rem;
+        color: #007bff;
+    }
+
+    p {
+        margin: 10px 0 0;
+        color: #666;
+    }
+
+    .uploadInput {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        cursor: pointer;
+    }
+}
+
+.imagePreviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.imagePreviewItem {
+    position: relative;
+    width: 100px; /* Kích thước ảnh preview */
+    height: 100px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    overflow: hidden;
+    cursor: pointer;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+    }
+
+    .removeImageButton {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        background-color: rgba(220, 53, 69, 0.8);
+        color: white;
+        border-radius: 50%;
+        width: 20px;
+        height: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.8rem;
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.2s ease-in-out;
+    }
+
+    &:hover .removeImageButton {
+        opacity: 1;
+    }
+}
+
+.tinymceEditor {
+    width: 100%; /* Đảm bảo editor chiếm 100% chiều rộng */
+    box-sizing: border-box; /* Tính toán padding vào kích thước */
+}
+
+.formActions {
+    grid-column: 1 / -1; /* Chiếm toàn bộ chiều rộng */
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.submitButton,
+.cancelButton {
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.submitButton {
+    background-color: #28a745;
+    color: white;
+
+    &:hover {
+        background-color: #218838;
+    }
+}
+
+.cancelButton {
+    background-color: #6c757d;
+    color: white;
+
+    &:hover {
+        background-color: #5a6268;
+    }
+}

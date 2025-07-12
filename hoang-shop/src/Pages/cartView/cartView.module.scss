@@ -1,0 +1,350 @@
+/* cartView.module.scss */
+
+.cartViewContainer {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+.pageHeader {
+    text-align: center;
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 30px;
+    font-weight: 700;
+}
+
+.loadingMessage,
+.emptyCartMessage {
+    text-align: center;
+    padding: 50px 0;
+    font-size: 1.2em;
+    color: #666;
+
+    p {
+        margin-bottom: 15px;
+    }
+}
+
+.continueShoppingEmptyCartButton {
+    background-color: #007bff; // A common blue for primary actions
+    color: white;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+
+    &:hover {
+        background-color: #0056b3;
+        transform: translateY(-2px);
+    }
+
+    &:active {
+        transform: translateY(0);
+    }
+}
+
+.cartContent {
+    display: flex;
+    gap: 30px;
+
+    @media (max-width: 992px) {
+        flex-direction: column;
+    }
+}
+
+.cartItemsSection {
+    flex: 2;
+    border-right: 1px solid #eee;
+    padding-right: 30px;
+    max-height: 800px;
+    overflow-y: scroll;
+
+    @media (max-width: 992px) {
+        border-right: none;
+        border-bottom: 1px solid #eee;
+        padding-right: 0;
+        padding-bottom: 30px;
+    }
+}
+
+.itemCount {
+    font-size: 1.1em;
+    color: #555;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 15px;
+}
+
+.cartItem {
+    display: flex;
+    align-items: center;
+    padding: 20px 0;
+    border-bottom: 1px solid #eee;
+    &:last-child {
+        border-bottom: none;
+    }
+
+    .itemImage {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 5px;
+        margin-right: 20px;
+        flex-shrink: 0; // Prevent image from shrinking
+    }
+
+    .itemDetails {
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        margin-right: 20px;
+
+        .itemName {
+            font-size: 1.15em;
+            color: #333;
+            margin-bottom: 8px;
+        }
+
+        .itemPriceOriginal {
+            font-size: 0.9em;
+            color: #999;
+            text-decoration: line-through;
+            margin-bottom: 5px;
+        }
+
+        .itemPriceCurrent {
+            font-size: 1.1em;
+            color: #d9534f; // Reddish for current price
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .quantityControl {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+
+            button {
+                background-color: #f0f0f0;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                width: 30px;
+                height: 30px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                font-size: 1.1em;
+                cursor: pointer;
+                transition: background-color 0.2s ease, border-color 0.2s ease;
+
+                &:hover {
+                    background-color: #e0e0e0;
+                    border-color: #ccc;
+                }
+            }
+
+            .quantityInput {
+                width: 50px;
+                padding: 5px 8px;
+                text-align: center;
+                border: 1px solid #ddd;
+                border-radius: 4px;
+                font-size: 1em;
+                -moz-appearance: textfield; /* Firefox */
+                &::-webkit-outer-spin-button,
+                &::-webkit-inner-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                }
+            }
+        }
+    }
+
+    .itemActions {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 10px;
+        flex-shrink: 0; // Prevent actions from shrinking
+
+        .itemTotalPrice {
+            font-size: 1.2em;
+            font-weight: 700;
+            color: #333;
+            white-space: nowrap; // Prevent wrapping for total price
+        }
+
+        .removeItemButton {
+            background: none;
+            border: none;
+            color: #aaa; // Initial subtle color
+            font-size: 24px; // Made larger for better appearance of &times;
+            cursor: pointer;
+            padding: 5px 10px; // Adjust padding to fit the new font size
+            line-height: 1; // Crucial for centering the X character
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%; // Circular shape
+            transition: background-color 0.2s ease, color 0.2s ease, transform 0.1s ease;
+
+            &:hover {
+                background-color: #fcebeb; // Very light red background on hover
+                color: #dc3545; // Standard red for delete
+                transform: scale(1.1); // Slightly pop out
+            }
+
+            &:active {
+                background-color: #f8d7da; // More intense red on click
+                transform: scale(1);
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+        align-items: flex-start;
+
+        .itemImage {
+            margin-bottom: 15px;
+            margin-right: 0;
+        }
+
+        .itemDetails {
+            margin-bottom: 15px;
+            margin-right: 0;
+            width: 100%;
+        }
+
+        .itemActions {
+            flex-direction: row;
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+    }
+}
+
+.orderSummarySection {
+    flex: 1; // Takes up less space
+    padding-left: 30px;
+    border-left: 1px solid #eee; // Subtle separator
+
+    @media (max-width: 992px) {
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .orderSummaryHeader {
+        font-size: 1.8em;
+        color: #333;
+        margin-bottom: 25px;
+        font-weight: 700;
+        text-align: center; // Center header
+    }
+
+    .totalRow {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+        font-size: 1.4em;
+        font-weight: 700;
+        color: #333;
+
+        .totalAmount {
+            color: #d9534f; // Reddish for total amount
+        }
+    }
+
+    .checkoutButton {
+        width: 100%;
+        padding: 15px 20px;
+        background-color: #d9534f; // Strong red for primary action
+        color: white;
+        border: none;
+        border-radius: 8px; // Slightly more rounded
+        font-size: 1.2em;
+        font-weight: 700;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease, box-shadow 0.2s ease;
+        margin-bottom: 15px; // Space below it
+
+        &:hover:not(:disabled) {
+            background-color: #c9302c; // Darker red on hover
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        &:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: none;
+        }
+
+        &:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+    }
+
+    .continueShoppingLink {
+        display: block; // Make it a block element to take full width
+        width: 100%;
+        text-align: center;
+        padding: 12px 20px;
+        background: none; // No background
+        color: #007bff; // Link blue color
+        border: 1px solid #007bff; // Outline border
+        border-radius: 8px;
+        font-size: 1em;
+        font-weight: 600;
+        cursor: pointer;
+        text-decoration: none; // Remove underline for link-style button
+        transition: background-color 0.3s ease, color 0.3s ease, transform 0.2s ease;
+
+        &:hover {
+            background-color: #007bff; // Fill background on hover
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .commitments {
+        margin-top: 30px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+
+        .commitmentItem {
+            display: flex;
+            align-items: flex-start; // Align text to the top
+            margin-bottom: 15px;
+            font-size: 0.95em;
+            color: #555;
+            line-height: 1.4;
+
+            .commitmentIcon {
+                color: #28a745; // Green checkmark
+                font-size: 1.2em;
+                font-weight: 700;
+                margin-right: 10px;
+                flex-shrink: 0; // Prevent icon from shrinking
+            }
+        }
+    }
+}

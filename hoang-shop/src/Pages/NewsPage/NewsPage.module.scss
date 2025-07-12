@@ -1,0 +1,205 @@
+.newsPage {
+  padding: 30px 15px;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .pageTitle {
+    font-size: 2.5em;
+    font-weight: 700;
+    color: #333;
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+
+    &::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background-color: #007bff;
+      margin: 15px auto 0;
+      border-radius: 2px;
+    }
+  }
+
+  .newsContainer {
+    display: flex;
+    gap: 30px;
+
+    @media (max-width: 992px) {
+      flex-direction: column;
+    }
+  }
+
+  .mainContent {
+    flex: 1;
+  }
+
+  .sidebar {
+    flex-shrink: 0;
+    width: 300px;
+
+    @media (max-width: 992px) {
+      width: 100%;
+    }
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap; // Để xuống dòng trên màn hình nhỏ
+    gap: 15px;
+
+    @media (max-width: 768px) {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .searchForm {
+      display: flex;
+      flex: 1;
+      max-width: 400px; // Giới hạn chiều rộng tìm kiếm
+
+      @media (max-width: 768px) {
+        max-width: 100%;
+      }
+    }
+
+    .searchInput {
+      flex: 1;
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px 0 0 5px;
+      font-size: 1em;
+      outline: none;
+
+      &:focus {
+        border-color: #007bff;
+      }
+    }
+
+    .searchButton {
+      padding: 10px 15px;
+      background-color: #007bff;
+      color: #fff;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #0056b3;
+      }
+      i {
+          margin-right: 5px; // Khoảng cách giữa icon và chữ
+      }
+    }
+
+    .sortSelect {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+
+      label {
+        font-size: 1em;
+        color: #555;
+      }
+
+      select {
+        padding: 8px 12px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1em;
+        outline: none;
+        cursor: pointer;
+
+        &:focus {
+          border-color: #007bff;
+        }
+      }
+    }
+  }
+
+  .newsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); // 300px là chiều rộng tối thiểu của NewsCard
+    gap: 25px;
+    margin-top: 20px;
+
+    @media (max-width: 768px) {
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 20px;
+    }
+    @media (max-width: 576px) {
+      grid-template-columns: 1fr; // 1 cột trên màn hình di động nhỏ
+      gap: 15px;
+    }
+  }
+
+  .newsGridSkeleton {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 25px;
+    margin-top: 20px;
+
+    .skeletonCard {
+      height: 350px; // Chiều cao ước tính của một NewsCard
+      background-color: #f0f0f0;
+      border-radius: 8px;
+      animation: pulse 1.5s infinite ease-in-out;
+    }
+
+    @keyframes pulse {
+      0% { background-color: #f0f0f0; }
+      50% { background-color: #e0e0e0; }
+      100% { background-color: #f0f0f0; }
+    }
+  }
+
+  .noNewsMessage, .errorMessage {
+    text-align: center;
+    padding: 30px;
+    font-size: 1.1em;
+    color: #666;
+    background-color: #f8f8f8;
+    border-radius: 8px;
+    margin-top: 20px;
+    border: 1px solid #eee;
+  }
+
+  .errorMessage {
+    background-color: #ffe0e0;
+    color: #d32f2f;
+    border: 1px solid #d32f2f;
+  }
+
+  .pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 40px;
+    gap: 10px;
+
+    .pageButton {
+      padding: 10px 15px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      background-color: #fff;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+
+      &:hover {
+        background-color: #f0f0f0;
+      }
+
+      &.active {
+        background-color: #007bff;
+        color: #fff;
+        border-color: #007bff;
+      }
+    }
+  }
+} 

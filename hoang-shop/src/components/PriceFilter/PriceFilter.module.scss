@@ -1,0 +1,121 @@
+.priceFilter {
+    padding: 20px 0;
+    border-top: 1px solid #eee;
+    margin-top: 20px;
+
+    .title {
+        font-size: 1.1em;
+        font-weight: 600;
+        margin-bottom: 15px;
+        color: #333;
+    }
+
+    .sliderContainer {
+        position: relative;
+        width: 100%;
+        position: relative;
+        width: 100%;
+        height: 50px;
+        margin-bottom: 0px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .rangeValues {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        font-size: 0.9em;
+        color: #555;
+        margin-bottom: 10px;
+        position: absolute;
+        top: -5px;
+        left: 0;
+        right: 0;
+        padding-bottom: 5px;
+    }
+
+    /* Base style for both sliders */
+    .slider {
+        -webkit-appearance: none;
+        width: 100%;
+        height: 5px;
+        background: transparent; /* QUAN TRỌNG: Làm nền của input transparent */
+        outline: none;
+        opacity: 1;
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        left: 0;
+        pointer-events: none; /* Cho phép click xuyên qua track để tương tác với thumb */
+        z-index: 5; /* Đảm bảo slider nằm trên trackBackground và filledTrack */
+
+        &::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #666; /* Màu của thumb */
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            pointer-events: all; /* Cho phép tương tác với thumb */
+        }
+
+        &::-moz-range-thumb {
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #666;
+            cursor: pointer;
+            border: 2px solid #fff;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+            pointer-events: all;
+        }
+    }
+
+    /* Visual track background (màu mờ) */
+    .trackBackground {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 100%;
+        height: 5px;
+        background: #d3d3d3; /* Màu của phần track KHÔNG được chọn */
+        border-radius: 5px;
+        z-index: 1; /* Nằm dưới filledTrack và slider */
+    }
+
+    /* Filled track (màu nổi bật) */
+    .filledTrack {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        height: 5px;
+        background: #666; /* Màu của phần track ĐƯỢC CHỌN */
+        border-radius: 5px;
+        z-index: 2; /* Nằm trên trackBackground, dưới slider */
+        pointer-events: none; /* Không cho phép tương tác với thanh này */
+    }
+
+    .filterButton {
+        width: 100px;
+        background-color: #666;
+        color: white;
+        padding: 8px 20px;
+        border: none;
+        border-radius: 99px;
+        cursor: pointer;
+        font-size: 0.9em;
+        font-weight: 500;
+        transition: background-color 0.3s ease;
+        text-align: center;
+
+        &:hover {
+            background-color: #97a1ad;
+        }
+    }
+}

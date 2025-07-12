@@ -1,0 +1,308 @@
+// frontend/src/pages/AdminNewsPage/AdminNewsPage.module.scss
+.adminNewsPage {
+    padding: 30px 15px;
+    max-width: 1400px;
+    margin: 0 auto;
+
+    .pageTitle {
+        font-size: 28px;
+        font-weight: 600;
+        margin-bottom: 20px;
+        color: #333;
+        text-transform: uppercase;
+    }
+
+    .addNewsButton {
+        background-color: #28a745;
+        color: #fff;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        font-size: 1em;
+        font-weight: 500;
+        margin-bottom: 25px;
+        display: flex; /* Dùng flex để căn icon và text */
+        align-items: center; /* Căn giữa theo chiều dọc */
+        gap: 8px; /* Khoảng cách giữa icon và text */
+        margin-left: auto;
+        transition: background-color 0.2s ease;
+
+        &:hover {
+            background-color: #218838;
+        }
+    }
+
+    /* Modal Styles */
+    .modalOverlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: rgba(0, 0, 0, 0.6);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        z-index: 1000;
+    }
+
+    .modalContent {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 900px;
+        max-height: 90vh;
+        overflow-y: auto;
+        position: relative;
+
+        .modalTitle {
+            font-size: 2em;
+            color: #333;
+            margin-bottom: 25px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 15px;
+        }
+
+        .newsForm {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+
+            .formGroup {
+                display: flex;
+                flex-direction: column;
+
+                label {
+                    margin-bottom: 8px;
+                    font-weight: 600;
+                    color: #555;
+                }
+
+                input[type="text"],
+                textarea {
+                    padding: 12px;
+                    border: 1px solid #ddd;
+                    border-radius: 5px;
+                    font-size: 1em;
+                    width: 100%;
+                    box-sizing: border-box;
+
+                    &:focus {
+                        border-color: #007bff;
+                        outline: none;
+                        box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+                    }
+                }
+
+                textarea {
+                    resize: vertical;
+                    min-height: 80px;
+                }
+
+                .imagePreview img {
+                    width: 60%;
+                    height: auto;
+                    margin-top: 20px;
+                    object-fit: cover;
+                }
+            }
+
+            .formError {
+                color: #dc3545;
+                font-size: 0.9em;
+                margin-top: -10px;
+                margin-bottom: 10px;
+                text-align: center;
+            }
+
+            .formActions {
+                display: flex;
+                justify-content: flex-end;
+                gap: 10px;
+                margin-top: 20px;
+
+                button {
+                    padding: 10px 20px;
+                    border: none;
+                    border-radius: 5px;
+                    cursor: pointer;
+                    font-size: 1em;
+                    font-weight: 500;
+                    transition: background-color 0.2s ease;
+
+                    &:hover:not(:disabled) {
+                        opacity: 0.9;
+                    }
+                    &:disabled {
+                        opacity: 0.6;
+                        cursor: not-allowed;
+                    }
+
+                    &.submitButton {
+                        background-color: #007bff;
+                        color: #fff;
+                    }
+
+                    &.cancelButton {
+                        background-color: #6c757d;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+    }
+
+    .newsTableContainer {
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        overflow-x: auto;
+    }
+
+    .newsTable {
+        width: 100%;
+        border-collapse: collapse;
+
+        thead {
+            background-color: #f8f9fa;
+
+            th {
+                padding: 15px;
+                text-align: left;
+                font-weight: 700;
+                color: #333;
+                border-bottom: 1px solid #ddd;
+            }
+        }
+
+        tbody {
+            tr {
+                &:nth-child(even) {
+                    background-color: #f2f2f2;
+                }
+                &:hover {
+                    background-color: #f9f9f9;
+                }
+            }
+        }
+    }
+
+    .errorMessage,
+    .noNewsMessage {
+        text-align: center;
+        padding: 30px;
+        background-color: #ffe0e0;
+        color: #d32f2f;
+        border: 1px solid #d32f2f;
+        border-radius: 8px;
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .modalContent {
+            padding: 20px;
+        }
+        .modalTitle {
+            font-size: 1.5em;
+        }
+        .newsForm .formGroup {
+            label {
+                font-size: 0.9em;
+            }
+            input[type="text"],
+            textarea {
+                padding: 10px;
+                font-size: 0.9em;
+            }
+        }
+        .newsForm .formActions button {
+            padding: 8px 15px;
+            font-size: 0.9em;
+        }
+    }
+
+    /* --- Pagination Styles --- */
+    .paginationFooter {
+        display: flex;
+        justify-content: space-between; // Đẩy phần tử "X / page" sang trái, nút phân trang sang phải
+        align-items: center;
+        margin-top: 30px;
+        padding: 15px;
+        border-top: 1px solid #eee; // Tách biệt footer với bảng
+    }
+
+    .selectValue {
+        width: 350px;
+    }
+
+    .itemsPerPage {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+
+        span {
+            font-size: 0.95em;
+            color: #555;
+        }
+
+        select {
+            padding: 6px 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 0.95em;
+            cursor: pointer;
+            background-color: white;
+            &:focus {
+                outline: none;
+                border-color: #007bff;
+                box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25);
+            }
+        }
+    }
+
+    .paginationControls {
+        display: flex;
+        justify-content: flex-end; // Đẩy các nút trang sang phải
+        align-items: center;
+        gap: 5px; // Khoảng cách nhỏ giữa các nút
+    }
+
+    .paginationButton {
+        padding: 8px 12px; // Giảm padding một chút cho các nút số
+        border: 1px solid #ccc;
+        border-radius: 4px; // Bo tròn nhẹ hơn
+        background-color: #fff; // Nền trắng
+        color: #333;
+        cursor: pointer;
+        font-size: 0.9em; // Giảm kích thước font một chút
+        min-width: 35px; // Đảm bảo kích thước tối thiểu
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+
+        &:hover:not(:disabled) {
+            background-color: #e0e0e0;
+            border-color: #999;
+        }
+
+        &:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background-color: #f8f8f8; // Nền nhạt hơn khi disabled
+        }
+
+        &.active {
+            background-color: #007bff; // Màu xanh chính
+            color: white;
+            border-color: #007bff;
+
+            &:hover {
+                background-color: #0056b3;
+                border-color: #0056b3;
+            }
+        }
+    }
+}

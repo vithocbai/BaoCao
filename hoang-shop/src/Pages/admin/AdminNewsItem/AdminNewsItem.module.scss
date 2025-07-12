@@ -1,0 +1,102 @@
+// frontend/src/components/AdminNewsItem/AdminNewsItem.module.scss
+.adminNewsItem {
+    background-color: #fff;
+    border-bottom: 1px solid #eee;
+
+    &:last-child {
+        border-bottom: none;
+    }
+
+    td {
+        padding: 15px;
+        vertical-align: middle;
+        text-align: left;
+
+        &:first-child {
+            padding-left: 20px;
+        }
+        &:last-child {
+            padding-right: 20px;
+        }
+    }
+
+    .thumbnail {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+
+    .titleLink {
+        text-decoration: none;
+        color: inherit;
+        &:hover {
+            color: #007bff;
+        }
+    }
+
+    .title {
+        font-size: 1em;
+        font-weight: 600;
+        color: #333;
+        margin-bottom: 5px;
+        line-height: 1.3;
+    }
+
+    .slug {
+        font-size: 0.85em;
+        color: #777;
+    }
+
+    .description {
+        font-size: 0.9em;
+        color: #666;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .actions {
+        display: flex;
+        gap: 8px;
+        justify-content: center;
+        align-items: center;
+
+        .actionButton {
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1em;
+            width: 38px;
+            height: 38px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: background-color 0.2s ease, transform 0.1s ease;
+
+            &:hover {
+                transform: translateY(-2px);
+            }
+
+            &.editButton {
+                background-color: #007bff;
+                color: #fff;
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+
+            &.deleteButton {
+                background-color: #dc3545;
+                color: #fff;
+                &:hover {
+                    background-color: #c82333;
+                }
+            }
+        }
+    }
+}

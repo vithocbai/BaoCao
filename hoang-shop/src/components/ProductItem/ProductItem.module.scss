@@ -1,0 +1,113 @@
+.productCard {
+    cursor: pointer;
+    transition: box-shadow 0.4s ease, transform 0.4s ease;
+    box-shadow: 1px 2px 7px 0 rgba(0, 0, 0, 0.21);
+    background-color: #fff;
+    &:hover {
+        transform: translateY(-2px); // hiệu ứng "nổi lên" nhẹ
+    }
+}
+
+.imageWrapper {
+    position: relative;
+    overflow: hidden;
+}
+
+.mainImage,
+.hoverImage {
+    width: 100%;
+    display: block;
+    transition: opacity 0.6s ease-in-out;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.mainImage {
+    z-index: 1;
+    opacity: 1;
+}
+
+.hoverImage {
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.imageWrapper:hover .hoverImage {
+    opacity: 1;
+    visibility: visible;
+}
+
+.imageWrapper:hover .mainImage {
+    opacity: 0;
+}
+
+.link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.imageWrapper {
+    position: relative;
+    width: 100%;
+    height: auto;
+
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .mainImage {
+        position: relative;
+        z-index: 1;
+    }
+
+    .hoverImage {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.4s ease, visibility 0.4s;
+    }
+}
+
+.saleTag {
+    position: absolute;
+    z-index: 2;
+    top: 10px;
+    right: 10px;
+    background-color: #e53935;
+    color: #fff;
+    font-size: 12px;
+    padding: 8px 12px;
+    border-radius: 4px;
+}
+
+.info {
+    padding: 20px;
+    .name {
+        font-size: 14px;
+        color: #000;
+        margin-bottom: 8px;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Giới hạn tối đa 2 dòng */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis; /* Thêm dấu "..." nếu văn bản dài hơn */
+        word-break: break-word; /* Ngắt từ nếu cần */
+
+        &:hover {
+            color: #3399d2;
+        }
+    }
+
+    .price {
+        font-size: 16px;
+        color: red;
+        font-weight: bold;
+    }
+}
